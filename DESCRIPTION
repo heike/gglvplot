@@ -1,0 +1,15 @@
+Package: gglvplot
+Type: Package
+Title: Letter Value Plots in ggplot2
+Version: 0.0.1
+Date: 2015-09-22
+Author: Heike Hofmann
+Maintainer: Heike Hofmann <hofmann@iastate.edu>
+Description: Letter value plots implemented in the ggplot2 framework. This should eventually go into the GGally package.
+License: GPL-3
+LazyData: TRUE
+Depends:
+    R (>= 2.14)
+Imports:
+  ggplot2 (>= 1.0.1.9003),
+  grid
