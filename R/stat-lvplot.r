@@ -173,7 +173,6 @@ confintLV <- function(x, k, alpha=0.95) {
 #' title of stat_lvplot
 #'
 #' need a better description here, probably referring to geom_lvplot
-#' @param coef length of the whiskers as multiple of IQR.  Defaults to 1.5
 #' @param na.rm If \code{FALSE} (the default), removes missing values with
 #'    a warning.  If \code{TRUE} silently removes missing values.
 #' @inheritParams ggplot2::stat_identity
@@ -188,7 +187,7 @@ confintLV <- function(x, k, alpha=0.95) {
 #' }
 #' @export
 stat_lvplot <- function(mapping = NULL, data = NULL, geom = "lvplot",
-  position = "dodge", na.rm = FALSE, coef = 1.5, show.legend = NA,
+  position = "dodge", na.rm = FALSE, conf = 0.95, percent = NULL, k = NULL, show.legend = NA,
   inherit.aes = TRUE, ...)
 {
   layer(
@@ -200,8 +199,10 @@ stat_lvplot <- function(mapping = NULL, data = NULL, geom = "lvplot",
     show.legend = show.legend,
     inherit.aes = inherit.aes,
     params = list(
+      conf = conf,
+      k = k,
+      percent = percent,
       na.rm = na.rm,
-      coef = coef,
       ...
     )
   )
@@ -223,16 +224,14 @@ StatLvplot <- ggplot2::ggproto("StatLvplot", ggplot2::Stat,
     params
   },
 
-  compute_group = function(data, scales, width = NULL, na.rm = FALSE, coef = 1.5) {
+  compute_group = function(data, scales, width = NULL, na.rm = FALSE, k = NULL, conf=0.95, percent=NULL) {
     n <- nrow(data)
-    src.k <- NULL
-    alpha <- 0.95
-    perc <- NULL
-    k <- determineDepth(n, src.k, alpha, perc)
+
+    k <- determineDepth(n, k, alpha=conf, percent)
     # compute letter values and outliers
     stats <- calcLV(data$y, k)
     outliers <- data$y < min(stats) | data$y > max(stats)
-    res <- outputLVplot(data$y, stats, k, outliers, alpha)
+    res <- outputLVplot(data$y, stats, k, outliers, alpha=conf)
 
     df <- data.frame(res$letter.val)
     df$k <- k

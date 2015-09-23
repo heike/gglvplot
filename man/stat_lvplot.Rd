@@ -5,8 +5,8 @@
 \title{title of stat_lvplot}
 \usage{
 stat_lvplot(mapping = NULL, data = NULL, geom = "lvplot",
-  position = "dodge", na.rm = FALSE, coef = 1.5, show.legend = NA,
-  inherit.aes = TRUE, ...)
+  position = "dodge", na.rm = FALSE, conf = 0.95, percent = NULL,
+  k = NULL, show.legend = NA, inherit.aes = TRUE, ...)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, usually constructed with
@@ -23,8 +23,6 @@ on this layer}
 
 \item{na.rm}{If \code{FALSE} (the default), removes missing values with
 a warning.  If \code{TRUE} silently removes missing values.}
-
-\item{coef}{length of the whiskers as multiple of IQR.  Defaults to 1.5}
 
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
