@@ -89,6 +89,16 @@ ggplot(diamonds, aes(carat, price)) +
   geom_lvplot()
 ggplot(diamonds, aes(carat, price)) +
   geom_lvplot(aes(group = cut_width(carat, 0.25)))
+
+# just for now: read On_Time data from lvplot paper
+library(RColorBrewer)
+cols <- c("white",brewer.pal(9, "Greys"), "Red", "Pink")
+reds <- brewer.pal(5, "Reds")[-1]
+cols <- c("grey50", cols[2:3], reds[1], cols[4:6], reds[2], cols[7:9], reds[3], cols[10:11])
+
+ggplot(data=ot) + geom_lvplot(aes(x=UniqueCarrier, y=sqrt(TaxiOut+TaxiIn),
+  fill=..LV..), alpha=1) +
+  scale_fill_manual(values=cols)
 }
 \references{
 McGill, R., Tukey, J. W. and Larsen, W. A. (1978) Variations of
