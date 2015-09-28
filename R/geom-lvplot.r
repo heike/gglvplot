@@ -21,8 +21,6 @@
 #' actual observations, thus remaining faithful to the principles that
 #' governed Tukey's original boxplot.
 #'
-#' @section Aesthetics:
-#'
 #' @seealso \code{\link{stat_quantile}} to view quantiles conditioned on a
 #'   continuous variable.
 #' @inheritParams ggplot2::geom_point
@@ -58,6 +56,7 @@
 #' # Plots are automatically dodged when any aesthetic is a factor
 #' p + geom_lvplot(aes(fill = drv))
 #'
+#' \dontrun{
 #' # just for now: read On_Time data into object ot from lvplot paper
 #' library(RColorBrewer)
 #' cols <- c("white",brewer.pal(9, "Greys"), "Red", "Pink")
@@ -70,13 +69,13 @@
 #' ggplot(data=ot) + geom_lvplot(aes(x=factor(DayOfWeek), y=sqrt(TaxiOut+TaxiIn),
 #'   fill=..LV..), alpha=1) +
 #'   scale_fill_manual(values=cols) + facet_wrap(~UniqueCarrier)
-#'
+#' }
 geom_lvplot <- function(mapping = NULL, data = NULL, stat = "lvplot",
   position = "dodge", outlier.colour = "black", outlier.shape = 19,
   outlier.size = 1.5, outlier.stroke = 0.5,
   varwidth = FALSE, show.legend = NA, inherit.aes = TRUE, ...)
 {
-  layer(
+  ggplot2::layer(
     data = data,
     mapping = mapping,
     stat = stat,

@@ -176,23 +176,18 @@ confintLV <- function(x, k, alpha=0.95) {
 #' @param k number of letter values shown
 #' @param na.rm If \code{FALSE} (the default), removes missing values with
 #'    a warning.  If \code{TRUE} silently removes missing values.
-#' @section Computed variables:
+#' @section Computed/reported variables:
 #' \describe{
-#'   \item{width}{width of boxplot}
-#'   \item{ymin}{lower whisker = smallest observation greater than or equal to lower hinge - 1.5 * IQR}
-#'   \item{lower}{lower hinge, 25\% quantile}
-#'   \item{notchlower}{lower edge of notch = median - 1.58 * IQR / sqrt(n)}
-#'   \item{middle}{median, 50\% quantile}
-#'   \item{notchupper}{upper edge of notch = median + 1.58 * IQR / sqrt(n)}
-#'   \item{upper}{upper hinge, 75\% quantile}
-#'   \item{ymax}{upper whisker = largest observation less than or equal to upper hinge + 1.5 * IQR}
+#'   \item{k}{Number of Letter Values used for the display}
+#'   \item{LV}{Name of the Letter Value}
+#'   \item{width}{width of the interquartile box}
 #' }
 #' @export
 stat_lvplot <- function(mapping = NULL, data = NULL, geom = "lvplot",
   position = "dodge", na.rm = FALSE, conf = 0.95, percent = NULL, k = NULL, show.legend = NA,
   inherit.aes = TRUE, ...)
 {
-  layer(
+  ggplot2::layer(
     data = data,
     mapping = mapping,
     stat = StatLvplot,
@@ -210,7 +205,7 @@ stat_lvplot <- function(mapping = NULL, data = NULL, geom = "lvplot",
   )
 }
 
-
+#' @export
 StatLvplot <- ggplot2::ggproto("StatLvplot", ggplot2::Stat,
   required_aes = c("x", "y"),
   non_missing_aes = "weight",

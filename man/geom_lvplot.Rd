@@ -98,21 +98,12 @@ letter value shown. All aspects shown on the letter-value boxplot are
 actual observations, thus remaining faithful to the principles that
 governed Tukey's original boxplot.
 }
-\section{Aesthetics}{
-
-}
-
-\section{Computed variables}{
+\section{Computed/reported variables}{
 
 \describe{
-  \item{width}{width of boxplot}
-  \item{ymin}{lower whisker = smallest observation greater than or equal to lower hinge - 1.5 * IQR}
-  \item{lower}{lower hinge, 25\% quantile}
-  \item{notchlower}{lower edge of notch = median - 1.58 * IQR / sqrt(n)}
-  \item{middle}{median, 50\% quantile}
-  \item{notchupper}{upper edge of notch = median + 1.58 * IQR / sqrt(n)}
-  \item{upper}{upper hinge, 75\% quantile}
-  \item{ymax}{upper whisker = largest observation less than or equal to upper hinge + 1.5 * IQR}
+  \item{k}{Number of Letter Values used for the display}
+  \item{LV}{Name of the Letter Value}
+  \item{width}{width of the interquartile box}
 }
 }
 \examples{
@@ -130,6 +121,7 @@ p + geom_lvplot(outlier.colour = "red", outlier.shape = 1)
 # Plots are automatically dodged when any aesthetic is a factor
 p + geom_lvplot(aes(fill = drv))
 
+\dontrun{
 # just for now: read On_Time data into object ot from lvplot paper
 library(RColorBrewer)
 cols <- c("white",brewer.pal(9, "Greys"), "Red", "Pink")
@@ -142,6 +134,7 @@ ggplot(data=ot) + geom_lvplot(aes(x=UniqueCarrier, y=sqrt(TaxiOut+TaxiIn),
 ggplot(data=ot) + geom_lvplot(aes(x=factor(DayOfWeek), y=sqrt(TaxiOut+TaxiIn),
   fill=..LV..), alpha=1) +
   scale_fill_manual(values=cols) + facet_wrap(~UniqueCarrier)
+}
 }
 \references{
 McGill, R., Tukey, J. W. and Larsen, W. A. (1978) Variations of

@@ -6,7 +6,7 @@ Date: 2015-09-22
 Author: Heike Hofmann, Hadley Wickham
 Maintainer: Heike Hofmann <hofmann@iastate.edu>
 Description: Letter value plots implemented in the ggplot2 framework. This should eventually go into the GGally package.
-License: GPL-3
+License: GPL (>= 2)
 LazyData: TRUE
 Depends:
     R (>= 2.14)
