@@ -84,7 +84,6 @@ nameLV <- function(k) {
 #'   neighboring LV statistics.
 #' @param perc if supplied, depth k is adjusted such that \code{perc} percent
 #'   outliers are shown
-#' @export
 determineDepth <- function(n, k = NULL, alpha = NULL, perc = NULL) {
   if (!is.null(k)) {
     stopifnot(is.numeric(k) && length(k) == 1)
@@ -112,10 +111,11 @@ determineDepth <- function(n, k = NULL, alpha = NULL, perc = NULL) {
 
 #' Compute table of k letter values for vector x
 #'
+#' Calculate k letter values from numeric vector x together with an 100(1-alpha)\% confidence interval.
 #' @param x input numeric vector
 #' @param k number of letter values to compute
 #' @param alpha alpha-threshold for confidence level
-#' @export
+#' @return data frame of letter value (upper and lower value, if not the median), depth, and confidence interval.
 lvtable <- function(x, k, alpha=0.95) {
   n <- length(x)
   if (2^k > n) k <- ceiling(log2(n)) + 1
@@ -170,18 +170,20 @@ confintLV <- function(x, k, alpha=0.95) {
 }
 
 
-#' title of stat_lvplot
-#'
-#' need a better description here, probably referring to geom_lvplot
+#' @rdname geom_lvplot
+#' @param conf confidence level
+#' @param percent numeric value: percent of data in outliers
+#' @param k number of letter values shown
 #' @param na.rm If \code{FALSE} (the default), removes missing values with
 #'    a warning.  If \code{TRUE} silently removes missing values.
-#' @inheritParams ggplot2::stat_identity
 #' @section Computed variables:
 #' \describe{
 #'   \item{width}{width of boxplot}
 #'   \item{ymin}{lower whisker = smallest observation greater than or equal to lower hinge - 1.5 * IQR}
 #'   \item{lower}{lower hinge, 25\% quantile}
+#'   \item{notchlower}{lower edge of notch = median - 1.58 * IQR / sqrt(n)}
 #'   \item{middle}{median, 50\% quantile}
+#'   \item{notchupper}{upper edge of notch = median + 1.58 * IQR / sqrt(n)}
 #'   \item{upper}{upper hinge, 75\% quantile}
 #'   \item{ymax}{upper whisker = largest observation less than or equal to upper hinge + 1.5 * IQR}
 #' }
@@ -209,12 +211,6 @@ stat_lvplot <- function(mapping = NULL, data = NULL, geom = "lvplot",
 }
 
 
-#' Helper function
-#'
-#' has to be exported, but should not be used directly
-#' @format NULL
-#' @usage NULL
-#' @export
 StatLvplot <- ggplot2::ggproto("StatLvplot", ggplot2::Stat,
   required_aes = c("x", "y"),
   non_missing_aes = "weight",

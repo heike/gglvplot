@@ -13,7 +13,10 @@ lvtable(x, k, alpha = 0.95)
 
 \item{alpha}{alpha-threshold for confidence level}
 }
+\value{
+data frame of letter value (upper and lower value, if not the median), depth, and confidence interval.
+}
 \description{
-Compute table of k letter values for vector x
+Calculate k letter values from numeric vector x together with an 100(1-alpha)\% confidence interval.
 }
 

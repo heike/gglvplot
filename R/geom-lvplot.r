@@ -1,6 +1,25 @@
-#' Letter value plot.
+#' Side-by-side LV boxplots.
 #'
-#' See McGill et al. (1978) for more details.
+#' An extension of standard boxplots which draws k letter statistics.
+#' Conventional boxplots (Tukey 1977) are useful displays for conveying rough
+#' information about the central 50\% of the data and the extent of the data.
+#' For moderate-sized data sets (\eqn{n < 1000}), detailed estimates of tail
+#' behavior beyond the quartiles may not be trustworthy, so the information
+#' provided by boxplots is appropriately somewhat vague beyond the quartiles,
+#' and the expected number of ``outliers'' and ``far-out'' values for a
+#' Gaussian sample of size \eqn{n} is often less than 10 (Hoaglin, Iglewicz,
+#' and Tukey 1986). Large data sets (\eqn{n \approx 10,000-100,000}) afford
+#' more precise estimates of quantiles in the tails beyond the quartiles and
+#' also can be expected to present a large number of ``outliers'' (about
+#' \eqn{0.4 + 0.007 n}).
+#' The letter-value box plot addresses both these shortcomings: it conveys
+#' more detailed information in the tails using letter values, only out to the
+#' depths where the letter values are reliable estimates of their
+#' corresponding quantiles (corresponding to tail areas of roughly
+#' \eqn{2^{-i}}); ``outliers'' are defined as a function of the most extreme
+#' letter value shown. All aspects shown on the letter-value boxplot are
+#' actual observations, thus remaining faithful to the principles that
+#' governed Tukey's original boxplot.
 #'
 #' @section Aesthetics:
 #'
@@ -17,7 +36,7 @@
 #'   come from \code{geom_point()}.
 #' @param outlier.stroke Override aesthetics used for the outliers. Defaults
 #'   come from \code{geom_point()}.
-#' @param varwidth if \code{FALSE} (default) make a standard box plot. If
+#' @param varwidth if \code{FALSE} (default) draw boxes that are the same size for each group. If
 #'   \code{TRUE}, boxes are drawn with widths proportional to the
 #'   square-roots of the number of observations in the groups (possibly
 #'   weighted, using the \code{weight} aesthetic).
@@ -27,7 +46,7 @@
 #' @examples
 #' library(ggplot2)
 #' p <- ggplot(mpg, aes(class, hwy))
-#' p + geom_lvplot()
+#' p + geom_lvplot(aes(fill=..LV..)) + scale_fill_brewer()
 #' p + geom_lvplot() + geom_jitter(width = 0.2)
 #' p + geom_lvplot() + coord_flip()
 #' p + geom_lvplot(alpha=1, aes(fill=..LV..)) + scale_fill_brewer()
@@ -36,15 +55,8 @@
 #' p + geom_lvplot(fill = "white", colour = "#3366FF")
 #' p + geom_lvplot(outlier.colour = "red", outlier.shape = 1)
 #'
-#' # Boxplots are automatically dodged when any aesthetic is a factor
+#' # Plots are automatically dodged when any aesthetic is a factor
 #' p + geom_lvplot(aes(fill = drv))
-#'
-#' # You can also use boxplots with continuous x, as long as you supply
-#' # a grouping variable. cut_width is particularly useful
-#' ggplot(diamonds, aes(carat, price)) +
-#'   geom_lvplot()
-#' ggplot(diamonds, aes(carat, price)) +
-#'   geom_lvplot(aes(group = cut_width(carat, 0.25)))
 #'
 #' # just for now: read On_Time data from lvplot paper
 #' library(RColorBrewer)
@@ -55,6 +67,9 @@
 #' ggplot(data=ot) + geom_lvplot(aes(x=UniqueCarrier, y=sqrt(TaxiOut+TaxiIn),
 #'   fill=..LV..), alpha=1) +
 #'   scale_fill_manual(values=cols)
+#' ggplot(data=ot) + geom_lvplot(aes(x=factor(DayOfWeek), y=sqrt(TaxiOut+TaxiIn),
+#'   fill=..LV..), alpha=1) +
+#'   scale_fill_manual(values=cols) + facet_wrap(~UniqueCarrier)
 #'
 geom_lvplot <- function(mapping = NULL, data = NULL, stat = "lvplot",
   position = "dodge", outlier.colour = "black", outlier.shape = 19,
