@@ -120,17 +120,17 @@ library(ggplot2)
 p <- ggplot(mpg, aes(class, hwy))
 p + geom_lvplot(aes(fill=..LV..)) + scale_fill_brewer()
 p + geom_lvplot() + geom_jitter(width = 0.2)
-p + geom_lvplot() + coord_flip()
 p + geom_lvplot(alpha=1, aes(fill=..LV..)) + scale_fill_brewer()
 
-p + geom_lvplot(varwidth = TRUE)
+# Outliers
+p + geom_lvplot(varwidth = TRUE, aes(fill=..LV..)) + scale_fill_brewer()
 p + geom_lvplot(fill = "white", colour = "#3366FF")
 p + geom_lvplot(outlier.colour = "red", outlier.shape = 1)
 
 # Plots are automatically dodged when any aesthetic is a factor
 p + geom_lvplot(aes(fill = drv))
 
-# just for now: read On_Time data from lvplot paper
+# just for now: read On_Time data into object ot from lvplot paper
 library(RColorBrewer)
 cols <- c("white",brewer.pal(9, "Greys"), "Red", "Pink")
 reds <- brewer.pal(5, "Reds")[-1]
