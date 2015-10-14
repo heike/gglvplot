@@ -7,11 +7,11 @@
 \usage{
 geom_lvplot(mapping = NULL, data = NULL, stat = "lvplot",
   position = "dodge", outlier.colour = "black", outlier.shape = 19,
-  outlier.size = 1.5, outlier.stroke = 0.5, varwidth = FALSE,
-  show.legend = NA, inherit.aes = TRUE, ...)
+  outlier.size = 1.5, outlier.stroke = 0.5, na.rm = TRUE,
+  varwidth = FALSE, show.legend = NA, inherit.aes = TRUE, ...)
 
 stat_lvplot(mapping = NULL, data = NULL, geom = "lvplot",
-  position = "dodge", na.rm = FALSE, conf = 0.95, percent = NULL,
+  position = "dodge", na.rm = TRUE, conf = 0.95, percent = NULL,
   k = NULL, show.legend = NA, inherit.aes = TRUE, ...)
 }
 \arguments{
@@ -38,6 +38,9 @@ come from \code{geom_point()}.}
 
 \item{outlier.stroke}{Override aesthetics used for the outliers. Defaults
 come from \code{geom_point()}.}
+
+\item{na.rm}{If \code{FALSE} (the default), removes missing values with
+a warning.  If \code{TRUE} silently removes missing values.}
 
 \item{varwidth}{if \code{FALSE} (default) draw boxes that are the same size for each group. If
 \code{TRUE}, boxes are drawn with widths proportional to the
@@ -66,9 +69,6 @@ the default plot specification, e.g. \code{\link{borders}}.}
 
 \item{geom,stat}{Use to override the default connection between
 \code{geom_lvplot} and \code{stat_lvplot}.}
-
-\item{na.rm}{If \code{FALSE} (the default), removes missing values with
-a warning.  If \code{TRUE} silently removes missing values.}
 
 \item{conf}{confidence level}
 
@@ -115,7 +115,7 @@ p + geom_lvplot(alpha=1, aes(fill=..LV..)) + scale_fill_brewer()
 
 # Outliers
 p + geom_lvplot(varwidth = TRUE, aes(fill=..LV..)) + scale_fill_brewer()
-p + geom_lvplot(fill = "white", colour = "#3366FF")
+p + geom_lvplot(fill = "grey80", colour = "black")
 p + geom_lvplot(outlier.colour = "red", outlier.shape = 1)
 
 # Plots are automatically dodged when any aesthetic is a factor

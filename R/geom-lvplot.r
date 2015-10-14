@@ -21,6 +21,7 @@
 #' actual observations, thus remaining faithful to the principles that
 #' governed Tukey's original boxplot.
 #'
+#'
 #' @seealso \code{\link{stat_quantile}} to view quantiles conditioned on a
 #'   continuous variable.
 #' @inheritParams ggplot2::geom_point
@@ -50,7 +51,7 @@
 #'
 #' # Outliers
 #' p + geom_lvplot(varwidth = TRUE, aes(fill=..LV..)) + scale_fill_brewer()
-#' p + geom_lvplot(fill = "white", colour = "#3366FF")
+#' p + geom_lvplot(fill = "grey80", colour = "black")
 #' p + geom_lvplot(outlier.colour = "red", outlier.shape = 1)
 #'
 #' # Plots are automatically dodged when any aesthetic is a factor
@@ -72,7 +73,7 @@
 #' }
 geom_lvplot <- function(mapping = NULL, data = NULL, stat = "lvplot",
   position = "dodge", outlier.colour = "black", outlier.shape = 19,
-  outlier.size = 1.5, outlier.stroke = 0.5,
+  outlier.size = 1.5, outlier.stroke = 0.5, na.rm = TRUE,
   varwidth = FALSE, show.legend = NA, inherit.aes = TRUE, ...)
 {
   ggplot2::layer(
@@ -84,6 +85,7 @@ geom_lvplot <- function(mapping = NULL, data = NULL, stat = "lvplot",
     show.legend = show.legend,
     inherit.aes = inherit.aes,
     params = list(
+      na.rm = na.rm,
       outlier.colour = outlier.colour,
       outlier.shape = outlier.shape,
       outlier.size = outlier.size,
